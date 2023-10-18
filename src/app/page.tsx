@@ -1,10 +1,9 @@
-import Image from "next/image";
+import Header from "./header/header";
 
 export default function Home() {
   return (
     <>
-      <h1>Hello World</h1>
-      <h1>Let's starts</h1>
+      <Header />
     </>
   );
 }
