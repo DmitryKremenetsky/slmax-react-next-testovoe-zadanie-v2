@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -26,9 +27,11 @@ export default function Header() {
           </label>
         </div>
         <div className="header-item flex">
-          <p className="text-lg mr-4">About us</p>
-          <p className="text-lg mr-4">Images</p>
-          <p className="text-lg">Log in</p>
+          <button className="text-lg mr-4">About us</button>
+          <button className="text-lg mr-4">Images</button>
+          <Link className="text-lg cursor-pointer" href={`/authorization`}>
+            Log In
+          </Link>
         </div>
       </div>
     </>
