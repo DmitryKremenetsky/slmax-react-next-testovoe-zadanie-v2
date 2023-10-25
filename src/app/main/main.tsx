@@ -1,41 +1,29 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import mainBgSmall from "../../../public/bg-nature-small.jpg";
 
 export default function Main() {
   const myKey = "-onPHIKkw_AifSgiAIUflPJ7_f4Zb7NWnmymR8kWnwA";
-  const [photos, setPhotos] = useState<Photo[]>([]);
+  const siteUrl = `https://api.unsplash.com/photos/?client_id=${myKey}`;
 
-  interface Photo {
-    id: string;
-    urls: {
-      regular: string;
-    };
-    description: string | null;
-  }
+  const [photos, setPhotos] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchApi = async () => {
-      const url = `https://api.unsplash.com/photos/?client_id=${myKey}`;
-
+    const fetchData = async () => {
       try {
-        const response = await fetch(url);
-
+        const response = await fetch(siteUrl);
         if (!response.ok) {
-          throw new Error(`Ошибка HTTP: ${response.status}`);
+          throw new Error("Ошибка запроса к API");
         }
-
         const data = await response.json();
         setPhotos(data);
       } catch (error) {
-        console.error("Произошла ошибка при запросе к API:", error);
+        console.error(error);
       }
     };
 
-    fetchApi();
-  }, []);
+    fetchData();
+  }, [siteUrl]);
 
   return (
     <div>
@@ -54,16 +42,16 @@ export default function Main() {
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap justify-center m-40">
+        <div className="flex flex-wrap justify-center mt-20 mb-20">
           {photos.map((photo) => (
-            <div key={photo.id} className="image-item">
+            <div key={photo.id}>
               <Image
-                src={photo.urls.regular}
-                alt={photo.description || "No description"}
-                className=" w-auto h-96 object-cover m-4"
+                className="w-96 h-96 m-4"
+                src={photo.urls.small}
+                alt={photo.alt_description}
+                width={400}
+                height={400}
                 unoptimized={true}
-                width={500}
-                height={500}
               />
             </div>
           ))}
